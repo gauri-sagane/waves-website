@@ -2,8 +2,16 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const mongoSanitize = require('express-mongo-sanitize');
+const routes = require('./routes');
 
-app.use(mongoSanitize())
+// body parse
+app.use(express.json());
+
+// sanitize
+app.use(mongoSanitize());
+
+// routes
+app.use('/api', routes)
 
 const port = process.env.PORT || 3001
 app.listen(port, () => {
