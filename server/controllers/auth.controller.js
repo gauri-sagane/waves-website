@@ -3,9 +3,14 @@ const { authService } = require('../services')
 const authController = {
     async register(req, res, next){
         try{
-            
-        }catch(error) {
+            const { email, password } = req.body;
+            const user = await authService.createUser(email, password);
 
+            res.status(200).send({
+                user
+            })
+        }catch(error) {
+            console.log(error);
         }
         
     },
