@@ -1,4 +1,4 @@
-const { productsService } = require('.');
+const mongoose = require('mongoose');
 const { ApiError } = require('../middleware/apiError');
 const { Product } = require('../models/product');
 const httpStatus = require('http-status');
@@ -66,10 +66,82 @@ const allProducts = async(req) => {
     }
 }
 
+const paginateProducts = async(req) => {
+    try{
+        let aggQueryArray = [];
+
+        if(req.body.keywords && req.body.keywords != ''){
+            const re = new RegExp(`${req.body.keywords}`, 'gi');
+            aggQueryArray.push({
+                $match:{model:{ $regex: re }}
+            });
+        }
+
+        if(req.body.brand && req.body.brand.length > 0){
+            let newBrandsArray = req.body.brand.map((item)=>(
+                new mongoose.Types.ObjectId(item)
+            ));
+            aggQueryArray.push({
+                $match:{brand:{ $in: newBrandsArray }}
+            });
+        }
+
+        if(req.body.frets && req.body.frets.length > 0){
+            aggQueryArray.push({
+                $match:{frets:{ $in: req.body.frets }}
+            });
+        }
+
+        if(req.body.min && req.body.min > 0 || req.body.max && req.body.max < 5000){
+            // { $range: {price: [0, 100]}}  //available for paid account of mongo
+            if(req.body.min){
+                aggQueryArray.push({
+                    $match:{price:{ $gt: req.body.min }}
+                });
+            }
+
+            if(req.body.max){
+                aggQueryArray.push({
+                    $match:{price:{ $lt: req.body.max }}
+                });
+            }
+        }
+
+
+        // add populate
+        aggQueryArray.push(
+            { $lookup : 
+                {
+                    from: "brands",
+                    localField: "brand",
+                    foreignField: "_id",
+                    as: "brand"
+                }
+                
+            },
+            { $unwind: '$brand'}
+        )
+
+        let aggQuery = Product.aggregate(aggQueryArray);
+        const options = {
+            page: req.body.page,
+            limit: 2,
+            sort: { date: 'desc' }
+        }   
+
+        const products = await Product.aggregatePaginate(aggQuery, options);
+        return products;
+
+    } catch(error){
+        throw error;
+    }
+}
+
 module.exports = {
     addProduct,
     getProductById,
     updateProductById,
     deleteProductById,
-    allProducts
+    allProducts,
+    paginateProducts
 }
