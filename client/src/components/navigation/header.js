@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Header = () => {
+const Header = ({users, signOutUser}) => {
     return(
         <header className='bck_b_light'>
             <div className='container'>
@@ -13,21 +13,28 @@ const Header = () => {
                 </div>
                 <div className='right'>
                     <div className='top'>
-                        <>
-                            <div className='cart_link'>
-                                <span>0</span>
-                                <Link to='/dashboard/user/user_cart'>
-                                    My Cart
+                        { users.auth ?
+                            <>
+                                <div className='cart_link'>
+                                    <span>0</span>
+                                    <Link to='/dashboard/user/user_cart'>
+                                        My Cart
+                                    </Link>
+                                </div>
+                                <Link to='/dashboard'>
+                                    My Account
                                 </Link>
-                            </div>
-                            <Link to='/dashboard'>
-                                My Account
-                            </Link>
-                            <span onClick={() => alert('Log out')}>Log Out</span>
+                                <span 
+                                    onClick={() => signOutUser()}
+                                >
+                                    Log Out
+                                </span>
+                            </>
+                            :
                             <Link to='/sign_in'>
                                 Login
                             </Link>
-                        </>
+                        }
                     </div>
                     <div className='bottom'>
                         <Link to='/'>

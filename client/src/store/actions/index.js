@@ -3,8 +3,21 @@ import {
     GET_PROD_BY_DATE,
     ERROR_GLOBAL,
     SUCCESS_GLOBAL,
-    CLEAR_NOTIFICATION
+    CLEAR_NOTIFICATION,
+    AUTH_USER,
+    SIGN_OUT
 } from '../type';
+
+
+// User
+export const userAuthenticate = (user) => ({
+    type: AUTH_USER,
+    payload: user
+})
+
+export const userSignOut = () => ({
+    type: SIGN_OUT
+})
 
 
 // Products
