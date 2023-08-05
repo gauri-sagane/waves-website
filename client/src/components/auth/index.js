@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import AuthForm from './authForm';
+import PreventSignInRoute from '../../hoc/preventSignInRoute';
 
 const RegisterLogin = (props) => {
 
@@ -11,6 +12,7 @@ const RegisterLogin = (props) => {
     }
 
     return(
+        <PreventSignInRoute>
         <div className='page_wrapper'>
             <div className='container'>
                 <div className='register_login_container'>
@@ -45,6 +47,7 @@ const RegisterLogin = (props) => {
                 </div>
             </div>
         </div>
+        </PreventSignInRoute>
     )
 }
 

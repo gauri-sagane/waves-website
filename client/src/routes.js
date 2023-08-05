@@ -10,6 +10,9 @@ import Loader from './utils/loader';
 import { useDispatch, useSelector } from 'react-redux'
 import { userIsAuth, userSignOut } from './store/actions/user.actions';
 
+import Dashboard from './components/dashboard';
+import AuthGuard from './hoc/authGuard';
+
 const App = (props) => {
 
   const [loading, setLoading] = useState(true);
@@ -42,6 +45,7 @@ const App = (props) => {
           />
               <MainLayout>
                 <Routes>
+                <Route path="/dashboard" element = {AuthGuard(Dashboard) } />
                   <Route path="/sign_in" element = {<RegisterLogin />} />
                   <Route path="/" element = {<Home />} />
                 </Routes>
