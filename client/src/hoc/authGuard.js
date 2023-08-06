@@ -15,8 +15,10 @@ export default function authGuard(ComposedComponent) {
         useEffect(() => {
             if(!users.auth){
                 // <Navigate to="/" />
+                console.log('redirecting here')
                 navigate('/')
             }else{
+                // console.log("Here set true")
                 setIsAuth(true);
             }
         }, [users, navigate]);

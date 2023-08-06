@@ -42,7 +42,7 @@ export const userSignIn = (values) => {
 export const userIsAuth = () => {
     return async(dispatch) => {
         try{
-            if(!getTokenCookie){
+            if(!getTokenCookie()){
                 throw new Error();
             }
             const user = await axios.get(`api/auth/isauth`, getAuthHeader());
@@ -60,5 +60,24 @@ export const userSignOut = () => {
         removeTokenCookie();
         dispatch(actions.userSignOut())
         dispatch(actions.successGlobal("Good Bye !!"))
+    }
+}
+
+export const userUpdateProfile = (data) => {
+    return async(dispatch, getState) => {
+        try{
+            const profile = await axios.patch(`/api/users/profile`, {
+                data: data
+            }, getAuthHeader());
+            const userData = {
+                ...getState().users.data,
+                firstname: profile.data.firstname,
+                lastname: profile.data.lastname
+            }
+            dispatch(actions.userUpdateProfile(userData))
+            dispatch(actions.successGlobal("Profile Updated !!"))
+        }catch(error){
+            dispatch(actions.errorGlobal(error.response.data.message))
+        }
     }
 }
