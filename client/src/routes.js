@@ -13,6 +13,7 @@ import { userIsAuth, userSignOut } from './store/actions/user.actions';
 import Dashboard from './components/dashboard';
 import AuthGuard from './hoc/authGuard';
 import UserInfo from './components/dashboard/user/info';
+import AdminProducts from './components/dashboard/admin/products';
 
 const App = (props) => {
 
@@ -46,6 +47,7 @@ const App = (props) => {
           />
               <MainLayout>
                 <Routes>
+                  <Route path="/dashboard/admin/admin_products" element = {AuthGuard(AdminProducts) } />
                   <Route path="/dashboard/user/user_info" element = {AuthGuard(UserInfo) } />
                   <Route path="/dashboard" element = {AuthGuard(Dashboard) } />
                   <Route path="/sign_in" element = {<RegisterLogin />} />
