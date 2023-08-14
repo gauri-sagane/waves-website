@@ -6,7 +6,8 @@ import {
     CLEAR_NOTIFICATION,
     AUTH_USER,
     SIGN_OUT,
-    UPDATE_USER_PROFILE
+    UPDATE_USER_PROFILE,
+    USER_CHANGE_EMAIL
 } from '../type';
 
 
@@ -23,6 +24,11 @@ export const userSignOut = () => ({
 export const userUpdateProfile = (userdata) => ({
     type: UPDATE_USER_PROFILE,
     payload: userdata
+})
+
+export const userChangeEmail = (data) => ({
+    type: USER_CHANGE_EMAIL,
+    payload: data
 })
 
 

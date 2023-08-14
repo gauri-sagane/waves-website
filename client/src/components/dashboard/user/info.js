@@ -6,6 +6,7 @@ import { errorHelper } from '../../../utils/tools';
 import { useDispatch } from 'react-redux';
 import { TextField, Button } from '@mui/material';
 import { userUpdateProfile } from 'store/actions/user.actions';
+import EmailStepper from './stepper';
 
 const UserInfo = ({users}) => {
 
@@ -34,7 +35,7 @@ const UserInfo = ({users}) => {
 
     return(
         <DashboardLayout title="User Information">
-            <form className='mt-3 article-form' style={{maxWidth: '250px'}} onSubmit={formik.handleSubmit}>
+            <form className='mt-3 article_form' style={{maxWidth: '250px'}} onSubmit={formik.handleSubmit}>
                 <div className='form-group'>
                     <TextField 
                         style={{width: '100%', padding: '0 0 10px 0'}}
@@ -59,6 +60,10 @@ const UserInfo = ({users}) => {
                     Edit Profile
                 </Button>
             </form>
+            <hr />
+            <div>
+                <EmailStepper users={users}/>
+            </div>
         </DashboardLayout>
     )
 }
