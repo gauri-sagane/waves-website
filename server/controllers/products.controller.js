@@ -51,6 +51,14 @@ const productsControllers = {
         }catch(error){
             next(error)
         }
+    },
+    async picUpload(req, res, next){
+        try{
+            const pic = await productsService.picUpload(req);
+            res.json(pic);
+        }catch(error){
+            next(error)
+        }
     }
 }
 
