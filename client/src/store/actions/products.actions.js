@@ -1,6 +1,6 @@
 import * as actions from './index';
 import axios from 'axios';
-import { getAuthHeader, removeTokenCookie, getTokenCookie } from '../../utils/tools';
+import { getAuthHeader } from '../../utils/tools';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export const productsBySort = ({limit, sortBy, order, where}) => {
@@ -72,3 +72,24 @@ export const productAdd = (data) => {
     }
 }
 
+export const productsById = (id) => {
+    return async(dispatch) => {
+        try{
+            const product = await axios.get(`/api/products/product/${id}`);
+            dispatch(actions.productsById(product.data));
+        } catch(error){
+            dispatch(actions.errorGlobal(error.response.data.message))
+        }
+    }
+}
+
+export const productEdit = (values, id) => {
+    return async(dispatch) => {
+        try{
+            await axios.patch(`/api/products/product/${id}`, values, getAuthHeader());
+            dispatch(actions.successGlobal('Update Done !!'));
+        } catch(error){
+            dispatch(actions.errorGlobal(error.response.data.message))
+        }
+    }
+}
