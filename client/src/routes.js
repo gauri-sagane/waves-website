@@ -6,6 +6,7 @@ import Header from './components/navigation/header';
 import Footer from './components/navigation/footer';
 import Home from './components/home';
 import RegisterLogin from './components/auth';
+import Shop from './components/shop';
 import Loader from './utils/loader';
 import { useDispatch, useSelector } from 'react-redux'
 import { userIsAuth, userSignOut } from './store/actions/user.actions';
@@ -54,6 +55,7 @@ const App = (props) => {
                   <Route path="/dashboard/admin/admin_products" element = {AuthGuard(AdminProducts) } />
                   <Route path="/dashboard/user/user_info" element = {AuthGuard(UserInfo) } />
                   <Route path="/dashboard" element = {AuthGuard(Dashboard) } />
+                  <Route path="/shop" element = {<Shop />} />
                   <Route path="/sign_in" element = {<RegisterLogin />} />
                   <Route path="/" element = {<Home />} />
                 </Routes>

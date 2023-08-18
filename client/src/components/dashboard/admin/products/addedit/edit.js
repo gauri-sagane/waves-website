@@ -8,7 +8,7 @@ import { validation, formValues, getValuesToEdit } from './formValues';
 import PicUpload from './upload';
 import PicViewer from './picViewer';
 import { useDispatch , useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { getAllBrands } from '../../../../../store/actions/brands.actions';
 import { productEdit, productsById } from '../../../../../store/actions/products.actions';
 import { clearProductAdd, clearCurrentProduct } from '../../../../../store/actions/index';
@@ -22,7 +22,7 @@ const EditProduct = (props) => {
     const notifications = useSelector(state => state.notifications);
     const brands = useSelector(state => state.brands);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { id } = useParams();
 
     const formik = useFormik({
