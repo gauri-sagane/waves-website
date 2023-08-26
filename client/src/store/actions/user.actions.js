@@ -115,12 +115,25 @@ export const userAddToCart = (item) => {
 }
 
 export const removeFromCart = (position) => {
-    console.log(position)
     return async(dispatch, getState) => {
         try{
             const cart = getState().users.cart;
             cart.splice(position, 1);
             dispatch(actions.userAddToCart(cart));
+        }catch(error){
+            dispatch(actions.errorGlobal(error.response.data.message))
+        }
+    }
+}
+
+export const userPurchaseSuccess = (orderID) => {
+    return async(dispatch) => {
+        try{
+            const user = await axios.post(`/api/transaction/`, {
+                orderID
+            }, getAuthHeader());
+            dispatch(actions.successGlobal('Thank you for your purchase!'));
+            dispatch(actions.userPurchaseSuccess(user.data));
         }catch(error){
             dispatch(actions.errorGlobal(error.response.data.message))
         }
