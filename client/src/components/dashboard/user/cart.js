@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../../hoc/dashboardLayout';
 import Loader from '../../../utils/loader';
 import CartDetail from './cartDetail';
@@ -10,6 +11,7 @@ const UserCart = (props) => {
     const [loading, setLoading] = useState(false);
     const notifications = useSelector(state=>state.notifications);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const initialOptions = {
         clientId: "AeL6nCcey1Tmp5oBSaA3n71WO0dj_jL09r_B7B77gPI4y8txWZ4pfdtXSLkf-oWPwtPF3WR58sDbWvIG",
@@ -60,6 +62,15 @@ const UserCart = (props) => {
         return items;
     }
 
+    useEffect(()=>{
+        if(notifications && notifications.success){
+            navigate('/dashboard')
+        }
+        if(notifications && notifications.error){
+            setLoading(false);
+        }
+    }, [notifications, navigate])
+
     return(
         <DashboardLayout title="Your Cart">
             { props.users.cart && props.users.cart.length > 0 ? 
@@ -85,7 +96,7 @@ const UserCart = (props) => {
                                     })
                                 }}
                                 onApprove={(details, data)=>{
-                                    console.log(details);
+                                    // console.log(details);
                                     // console.log(data);
                                     dispatch(userPurchaseSuccess(details.orderID))
                                     setLoading(true);

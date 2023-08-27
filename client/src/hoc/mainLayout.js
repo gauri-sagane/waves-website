@@ -19,7 +19,10 @@ const MainLayout = (props) => {
         if(notifications && notifications.success){
             const msg = notifications.msg ? notifications.msg : 'Success!!';
             showToast('SUCCESS', msg);
-            dispatch(clearNotification());
+            if(notifications.msg !== 'Thank you for your purchase!'){
+                dispatch(clearNotification());
+            }
+            // dispatch(clearNotification());
         }
     },[notifications, dispatch])
 
